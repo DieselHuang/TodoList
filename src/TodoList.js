@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import TodoItem from './TodoItem'
-import CompletedItem from './CompletedItem'
+import Todos from './Todos';
+import Completed from './Completed';
 
 //定义一个React组件
 class TodotodoList extends Component { //一个类就是一个组件，必须继承React.Component
@@ -14,14 +14,23 @@ class TodotodoList extends Component { //一个类就是一个组件，必须继
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleBtnClick = this.handleBtnClick.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
-    this.handleComplete = this.handleComplete.bind(this);
+    this.handleKeyDownPost = this.handleKeyDownPost.bind(this);
+    this.updateView = this.updateView.bind(this);
   } 
-  
-  handleBtnClick() {
+
+  handleKeyDownPost(e) {
+    if (e.keyCode !== 13) {
+      return;
+    }
+    let value  = e.target.value.trim();
+    if (value === '') {
+      this.setState({
+        inputValue: ''
+      });
+      return;
+    }
     this.setState({
-      todoList: [...this.state.todoList, this.state.inputValue],
+      todoList: [...this.state.todoList, value],
       inputValue: ''
     });
   }
@@ -32,51 +41,11 @@ class TodotodoList extends Component { //一个类就是一个组件，必须继
     });
   }
 
-  handleDelete(index) {
-    const todoList = [...this.state.todoList];
-    todoList.splice(index, 1);
-    this.setState({todoList});
-  }
-
-  handleComplete(index) {
-    const todoList = [...this.state.todoList];
-    const completedList = [...this.state.completedList];
-    completedList.push(todoList[index]);
-    todoList.splice(index, 1);
+  updateView(todo, completed) {
     this.setState({
-      todoList,
-      completedList
+      todoList: todo,
+      completedList: completed
     })
-  }
-
-  getTodoItems() {
-    return (
-      this.state.todoList.map((item, index) => {
-        return (
-          <TodoItem 
-            delete={this.handleDelete} 
-            complete={this.handleComplete}
-            key={index} 
-            content={item} 
-            index={index}
-          />
-        );
-      })
-    )
-  }
-
-  getCompletedItems() {
-    return (
-      this.state.completedList.map((item, index) => {
-        return (
-          <CompletedItem 
-            key={index} 
-            content={item} 
-            index={index}
-          />
-        );
-      })
-    )
   }
 
   render() { //必须有render函数
@@ -84,14 +53,12 @@ class TodotodoList extends Component { //一个类就是一个组件，必须继
     return ( //组件显示的内容
       <Fragment>
         <div>
-          <input value={this.state.inputValue} onChange={this.handleInputChange}/>
-          <button onClick={this.handleBtnClick}>add</button>
+          <div>Diesel's TodoList</div>
+          <input value={this.state.inputValue} onChange={this.handleInputChange} onKeyDown = {this.handleKeyDownPost}/>
         </div>
-        <div>{this.state.todoList.length} item left</div>
-        <div>Todos</div>
-        <ul>{this.getTodoItems()}</ul>
-        <div>Completed</div>
-        <ul>{this.getCompletedItems()}</ul>
+
+        <Todos todoList={this.state.todoList} completedList={this.state.completedList} done={this.updateView}/>
+        <Completed todoList={this.state.todoList} completedList={this.state.completedList} done={this.updateView}/>
       </Fragment>
     );
   }
