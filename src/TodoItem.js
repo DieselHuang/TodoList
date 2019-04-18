@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import deleteBtn from './delete.png';
 
 class TodoItem extends Component {
   constructor(props) {
@@ -75,14 +76,17 @@ class TodoItem extends Component {
   
   render() {
     const {content} = this.props;
+
     return (
-      <li>
-        <div>
-          <div onClick={this.handleComplete}>O</div>
-          <div onDoubleClick={this.handleEdit}>{content}</div>
-          <button onClick={this.handleDelete}>x</button>
+      <li className='todoItem'>
+        <div className='items'>
+          <div id='cpltBtn' onClick={this.handleComplete}></div>
+          <div id='content' hidden={this.state.isEdit} onDoubleClick={this.handleEdit}>{content}</div>
+          <button id='dlt' onClick={this.handleDelete}><img id='dltBtn' src={deleteBtn} alt='delete' /></button>
         </div>
         <input 
+          id='edit'
+          hidden={!this.state.isEdit}
           value={this.props.value}
           ref='editInput'
           onChange={this.handleInputChange}

@@ -16,7 +16,7 @@ class Todos extends Component {
     const todoList = [...this.props.todoList];
     let completedList = [...this.props.completedList];
     completedList = completedList.concat(todoList);
-    this.props.done(todoList, completedList)
+    this.props.done([], completedList)
   }
 
   handleDeleteAll() {
@@ -61,14 +61,24 @@ class Todos extends Component {
   }
   
   render() {
+    let btn = null;
+    if (this.props.todoList.length > 1) {
+      btn = (
+        <div className='subFooter'>
+          <button className='btn' onClick={this.handleCompleteAll}>Complete All</button>
+          <button className='btn' onClick={this.handleDeleteAll}>Delete All</button>
+        </div>
+      )
+    }
+
     return(
       <Fragment>
-        <div hidden={this.props.todoList.length>1}>{this.props.todoList.length} item left</div>
-        <div hidden={this.props.todoList.length<2}>{this.props.todoList.length} items left</div>
-        <div>Todos</div>
-        <button onClick={this.handleCompleteAll}>Complete All</button>
-        <button onClick={this.handleDeleteAll}>Delete All</button>
+        <div className='subHeader'>
+          <h1 id='todosTitle'>Todos</h1>
+          <div className='nums'>{this.props.todoList.length}</div>
+        </div>
         <ul>{this.getTodoItems()}</ul>
+        {btn}
       </Fragment>
     )
   }

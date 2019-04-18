@@ -7,10 +7,11 @@ class Completed extends Component {
 
     this.handleClearCompleted = this.handleClearCompleted.bind(this);
     this.handleRecover = this.handleRecover.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
   
   handleClearCompleted() {
-    this.props.done(this.props.todoList, [])
+    this.props.done(this.props.todoList, []);
   }
 
   handleRecover(index) {
@@ -18,7 +19,13 @@ class Completed extends Component {
     const completedList = [...this.props.completedList];
     todoList.push(completedList[index]);
     completedList.splice(index, 1);
-    this.props.done(todoList, completedList)
+    this.props.done(todoList, completedList);
+  }
+
+  handleDelete(index) {
+    const completedList = [...this.props.completedList];
+    completedList.splice(index, 1);
+    this.props.done(this.props.todoList, completedList);
   }
 
   getCompletedItems() {
@@ -30,6 +37,7 @@ class Completed extends Component {
             content={item} 
             index={index}
             recover={this.handleRecover}
+            delete={this.handleDelete}
           />
         );
       })
@@ -37,11 +45,23 @@ class Completed extends Component {
   }
   
   render() {
+    let btn = null;
+    if (this.props.completedList.length > 1) {
+      btn = (
+        <div className='subFooter'>
+          <button className='btn' onClick={this.handleClearCompleted}>Clear</button>
+        </div>
+      )
+    }
+
     return(
       <Fragment>
-        <div>Completed</div>
-        <button onClick={this.handleClearCompleted}>Clear</button>
+        <div className='subHeader'>
+          <h1>Completed</h1>
+          <div className='nums'>{this.props.completedList.length}</div>
+        </div>
         <ul>{this.getCompletedItems()}</ul>
+        {btn}
       </Fragment>
     )
   }
