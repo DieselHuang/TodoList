@@ -81,7 +81,19 @@ class TodoItem extends Component {
       <li className='todoItem'>
         <div className='items'>
           <div id='cpltBtn' onClick={this.handleComplete}></div>
-          <div id='content' hidden={this.state.isEdit} onDoubleClick={this.handleEdit}>{content}</div>
+          {/* <div 
+            id='content' 
+            hidden={this.state.isEdit} 
+            onDoubleClick={this.handleEdit}
+          >
+            {content}
+          </div> */}
+          <div 
+            dangerouslySetInnerHTML={{__html: content}}
+            id='content' 
+            hidden={this.state.isEdit} 
+            onDoubleClick={this.handleEdit}
+          />
           <button id='dlt' onClick={this.handleDelete}><img id='dltBtn' src={deleteBtn} alt='delete' /></button>
         </div>
         <input 

@@ -46,6 +46,8 @@ class TodotodoList extends Component { //一个类就是一个组件，必须继
       });
       return;
     }
+    value = replaceURLWithHTMLLinks(value);
+    console.log(value);
     this.setState({
       todoList: [...this.state.todoList, value],
       inputValue: ''
@@ -104,6 +106,11 @@ class TodotodoList extends Component { //一个类就是一个组件，必须继
     );
   }
 
+}
+
+function replaceURLWithHTMLLinks(text) {
+  let exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+  return text.replace(exp,"<a href='$1'>$1</a>"); 
 }
 
 export default TodotodoList; //export之后，App才能被index.js import 
