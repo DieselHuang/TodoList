@@ -23,6 +23,7 @@ class TodotodoList extends Component { //一个类就是一个组件，必须继
     this.updateView = this.updateView.bind(this);
   } 
 
+  // handleClick()和handleBlur()：单击输入框提示消失，失去焦点时恢复提示
   handleClick() {
     this.setState({
       tips: ''
@@ -35,6 +36,7 @@ class TodotodoList extends Component { //一个类就是一个组件，必须继
     });
   }
 
+  // handleKeyDownPost()和handleInputChange()：处理输入，按下enter键完成输入
   handleKeyDownPost(e) {
     if (e.keyCode !== 13) {
       return;
@@ -46,6 +48,7 @@ class TodotodoList extends Component { //一个类就是一个组件，必须继
       });
       return;
     }
+    // 识别网址的函数
     value = replaceURLWithHTMLLinks(value);
     console.log(value);
     this.setState({
@@ -60,6 +63,7 @@ class TodotodoList extends Component { //一个类就是一个组件，必须继
     });
   }
 
+  // 传递给组件，点击删除、完成或修改item时更新视图
   updateView(todo, completed) {
     this.setState({
       todoList: todo,
@@ -69,9 +73,9 @@ class TodotodoList extends Component { //一个类就是一个组件，必须继
 
   render() { //必须有render函数
     //JSX语法，可以直接在React里面使用标签，也可以在{}里面写JS的表达式，但是不能写语句
+    // 实现todos组件和completed组件的动态显示，有内容时显示，无内容时隐藏
     let todos = null;
     let cmplt = null;
-
     if (this.state.todoList.length) {
       todos = (<Todos todoList={this.state.todoList} completedList={this.state.completedList} done={this.updateView}/>);
     }

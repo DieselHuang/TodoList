@@ -36,7 +36,7 @@ html {
   font-size: 15px;
   padding-left: 8px;
   color: rgb(173, 171, 171);
-  outline: none;
+  outline: none; 
 }
 
 /* Main */
@@ -118,6 +118,7 @@ li {
   outline: none;
 }
 
+/* 结合display和hover实现删除键的动态显示 */
 #dltBtn {
   width: 19px;
   height: 19px;
@@ -129,6 +130,7 @@ li {
   display: block;
 }
 
+/* 调节双击时出现的input和原来的div重合 */
 .todoItem {
   position: relative;
 }

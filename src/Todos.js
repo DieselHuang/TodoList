@@ -12,6 +12,7 @@ class Todos extends Component {
     this.itemEditDone = this.itemEditDone.bind(this);
   }
 
+  // 一键完成
   handleCompleteAll() {
     const todoList = [...this.props.todoList];
     let completedList = [...this.props.completedList];
@@ -19,16 +20,19 @@ class Todos extends Component {
     this.props.done([], completedList)
   }
 
+  // 一键删除
   handleDeleteAll() {
     this.props.done([], this.props.completedList)
   }
 
+  // 删除单个item
   handleDelete(index) {
     const todoList = [...this.props.todoList];
     todoList.splice(index, 1);
     this.props.done(todoList, this.props.completedList)
   }
 
+  // 完成单个item
   handleComplete(index) {
     const todoList = [...this.props.todoList];
     const completedList = [...this.props.completedList];
@@ -37,6 +41,7 @@ class Todos extends Component {
     this.props.done(todoList, completedList)
   }
   
+  // 渲染todos列表
   getTodoItems() {
     return (
       this.props.todoList.map((item, index) => {
@@ -54,6 +59,7 @@ class Todos extends Component {
     )
   }
 
+  // 传递给组件TodoItem，双击修改后更新视图
   itemEditDone(value, index) {
     const todoList = [...this.props.todoList];
     todoList[index] = value;
@@ -61,6 +67,7 @@ class Todos extends Component {
   }
   
   render() {
+    // 实现一键删除/完成的动态显示，内容大于两个时显示
     let btn = null;
     if (this.props.todoList.length > 1) {
       btn = (
